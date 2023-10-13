@@ -135,6 +135,9 @@ function loadApplication() {
 
         var riskLabel = document.getElementById("riskSummary");
         riskLabel.style.display = "block";
+
+        // innerText vs. innerHTML
+        // innerHTML gets the HTML code without the special characters
         riskLabel.innerHTML = generateRickProfile(la);
 
     }
@@ -380,13 +383,16 @@ function generateRickProfile(la) {
         riskProfile = "high";
     }
 
+    // the \t on ${} is used to create tabs in HTML
     var applicationCode = String.raw`\t${createApplicationId()}`;
 
+    // summaryText is an example of a Template Literal
+    // use ${variable} to add variables through interpolation
     var summaryText = foo
         `Dear ${la.ApplicantName}, <br>
-    your application for ${"$" + la.LoanAmount}, ${reviewText}.<br>
-    Your risk profile is ${riskProfile}.<br>
-    Your unique application code is ${applicationCode}`;
+        your application for ${"$" + la.LoanAmount}, ${reviewText}.<br>
+        Your risk profile is ${riskProfile}.<br>
+        Your unique application code is ${applicationCode}`;
 
     return summaryText;
 }
@@ -401,12 +407,14 @@ function createApplicationId() {
     return result;
 }
 
+// ...values means to put however many values there are to put them in an array called values
 function foo(strings, ...values) {
     let str = "";
     for (var i = 0; i < strings.raw.length; i++) {
         if (i > 0) {
             str += `<b>${values[i - 1]}</b>`
         }
+        // string.raw is a function used to get the raw string of the Template Literal
         str += strings.raw[i];
     }
 
